@@ -34,6 +34,10 @@ Schematron validation for SBGN AF
 		<iso:active pattern="af10114"/>
 	</iso:phase>
 
+	<iso:phase id="layout">
+		<iso:active pattern="af10115"/>
+	</iso:phase>
+
 	<iso:pattern id="00000">
 		<iso:rule context="/*">
 			<iso:assert id="00000" name="sanity-check" test="false()">This assertion should always fail.</iso:assert>
@@ -94,7 +98,7 @@ Schematron validation for SBGN AF
 				id="af10102"
 				name="check-positive-influence-target-class"
 				role="error"
-				see="sbgn-af-L1V1.0-3.3.1"				
+				see="sbgn-af-L1V1.2-4.2.1.1"				
 				test="
 				$target-class='biological activity' or 
 				$target-class='phenotype'" 
@@ -256,6 +260,43 @@ Schematron validation for SBGN AF
 				test="
 				(($compartment-count = 0) and not (@compartmentRef)) or (($compartment-count &gt; 0) and @compartmentRef)"
 				diagnostics="id">If there are compartments defined, top-level glyphs must have a compartmentRef"
+			</iso:assert>
+		</iso:rule> 
+	</iso:pattern> 
+	 
+	<iso:pattern id="af10115">
+		<iso:rule context="sbgn:map/sbgn:glyph[
+			@class= 'biological activity' or 
+		@class = 'phenotype' or 
+		@class = 'submap' or 
+		@class = 'and' or 
+		@class = 'or' or 
+		@class = 'not' or 
+		@class = 'delay'
+		]">
+			<iso:let name="id" value="@id"/>
+			<iso:assert
+				id="af10115"
+				name="check-overlapping-nodes"
+				role="error"
+				test="not(following::sbgn:glyph[
+					(@class= 'biological activity' or
+				@class = 'phenotype' or
+				@class = 'submap' or
+				@class = 'and' or
+				@class = 'or' or
+				@class = 'not' or
+				@class = 'delay')
+				and @class != 'unit of information'
+				and (
+						(@x <= current()/@x + current()/@width)
+					and (@x + @width >= current()/@x)
+					and (@y <= current()/@y + current()/@height)
+					and (@y + @height >= current()/@y)
+					)
+				]
+				)"
+				diagnostics="id">Illegal overlapping nodes are not allowed in SBGN AF.
 			</iso:assert>
 		</iso:rule> 
 	</iso:pattern> 
