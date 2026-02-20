@@ -35,8 +35,6 @@ Schematron validation for SBGN AF
 		<iso:active pattern="af10115"/>
 	</iso:phase>
 
-
-
 	<iso:pattern id="00000">
 		<iso:rule context="/*">
 			<iso:assert id="00000" name="sanity-check" test="false()">This assertion should always fail.</iso:assert>
@@ -97,7 +95,7 @@ Schematron validation for SBGN AF
 				id="af10102"
 				name="check-positive-influence-target-class"
 				role="error"
-				see="sbgn-af-L1V1.2-4.2.1.1"				
+				see="sbgn-af-L1V1.0-3.3.1"				
 				test="
 				$target-class='biological activity' or 
 				$target-class='phenotype'" 
