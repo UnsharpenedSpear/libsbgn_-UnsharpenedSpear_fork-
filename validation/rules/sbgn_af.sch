@@ -276,7 +276,7 @@ Schematron validation for SBGN AF
 				id="af10115"
 				name="check-overlapping-nodes"
 				role="error"
-				test="not(following::sbgn:glyph[
+				test="not(following-sibling::sbgn:glyph[
 					(@class= 'biological activity' or
 				@class = 'phenotype' or
 				@class = 'submap' or
@@ -284,7 +284,6 @@ Schematron validation for SBGN AF
 				@class = 'or' or
 				@class = 'not' or
 				@class = 'delay')
-				and @class != 'unit of information'
 				and (
   						(number(sbgn:bbox/@x) &lt;= number(current()/sbgn:bbox/@x) + number(current()/sbgn:bbox/@w)) and
  					(number(sbgn:bbox/@x) + number(sbgn:bbox/@w) >= number(current()/sbgn:bbox/@x)) and
